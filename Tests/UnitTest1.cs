@@ -14,14 +14,14 @@ namespace Tests {
 		public bool DestructiveTests = false;
 		public string Login;
 		public string Password;
-		public string TestTeamName;
-		public string TestTeam;
-		public string AdminUser;
-		public string AdminUserName;
+		public string TestTeamName = "testteam";
+		public string TestTeam = "54nnxpg8op8p7mzaaytfxtusnw";
+		public string AdminUser = "jc87ymfgsffbipn4q1tc6p61po";
+		public string AdminUserName = "viksing";
 		public string TestUser;
-		public string TestChannel;
-		public string TestChannelName;
-		public string TestEmail;
+		public string TestChannel = "u8tnm6rqspf3t8xt8uype51ccw";
+		public string TestChannelName = "TestTeam";
+		public string TestEmail = "lebedeva_vn@directum.ru";
 		public override List<string> Validate() {
 			List<string> errors = base.Validate();
 			return errors;
@@ -47,8 +47,7 @@ namespace Tests {
 					string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MattermostApi");
 					Directory.CreateDirectory(dataPath);
 					string filename = Path.Combine(dataPath, "TestSettings.json");
-					_settings = new Settings();
-					_settings.Load(filename);
+					_settings = new Settings() { ServerUri = new Uri("http://w714s19:8065/"), AccessToken = "dj8sfbjhc7ym5dt935nojkbhpa" };
 					List<string> errors = _settings.Validate();
 					if (errors.Count > 0)
 						throw new ApplicationException(string.Join("\r\n", errors));
@@ -86,31 +85,31 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 
 
 	}
-	[TestClass]
-	public class LoginTests : TestBase {
-		[TestMethod]
-		public void Login() {
-			if(Settings.LoginTests)
-				RunTest(Api.LoginAsync());
-		}
-		[TestMethod]
-		public void LoginWithPassword() {
-			if (Settings.LoginTests)
-				RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
-		}
-	}
-	[TestClass]
-	public class BugTests : TestBase {
-		[TestMethod]
-		public void Bug() {
-			var u = RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
-			Team t = RunTest(Team.GetById(Api, "j3x94gd5q3f79q1y9os9ddtuho"));
-			PlainList<Channel> channels = RunTest(u.ChannelsForTeam(Api, t.id));
-			foreach (Channel c in channels.List) {
-				Console.WriteLine($"{c.id}:{c.name}");
-			}
-		}
-	}
+	//[TestClass]
+	//public class LoginTests : TestBase {
+	//	[TestMethod]
+	//	public void Login() {
+	//		if(Settings.LoginTests)
+	//			RunTest(Api.LoginAsync());
+	//	}
+	//	[TestMethod]
+	//	public void LoginWithPassword() {
+	//		if (Settings.LoginTests)
+	//			RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
+	//	}
+	//}
+	//[TestClass]
+	//public class BugTests : TestBase {
+	//	[TestMethod]
+	//	public void Bug() {
+	//		var u = RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
+	//		Team t = RunTest(Team.GetById(Api, "j3x94gd5q3f79q1y9os9ddtuho"));
+	//		PlainList<Channel> channels = RunTest(u.ChannelsForTeam(Api, t.id));
+	//		foreach (Channel c in channels.List) {
+	//			Console.WriteLine($"{c.id}:{c.name}");
+	//		}
+	//	}
+	//}
 	[TestClass]
 	public class TeamTests : TestBase {
 		[TestMethod]
